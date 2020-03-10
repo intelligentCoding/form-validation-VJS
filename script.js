@@ -24,35 +24,26 @@ function validEmail(email){
 	//use test method to check if it is valid
     return regix.test(String(email).toLowerCase());
 }
+
+function getFieldName(input){
+	return input.id.charAt(0).toUpperCase() + input.id.slice(1);
+}
+
+//required files check
+function checkRequired(inputArr){
+	//Go through all the inputs value in the array
+	inputArr.forEach(function (input){
+		if(input.value.trim() === ''){
+			showError(input, `${getFieldName(input)} is required`);
+		} else {
+			showSuccess(input);
+		}
+	});
+}
 //add event listnet
 form.addEventListener('submit', function (e){
 	//stop the form from submitting
 	e.preventDefault();
-
-	if(username.value === ''){
-		showError(username, "Username is required");
-	} else {
-		showSuccess(username);
-	}
-	//for email
-	if(email.value === ''){
-		showError(email, "Email is required");
-	} else if (!validEmail(email)) 
-	{
-		showError(email, "Invalid Email");
-	}else {
-		showSuccess(email);
-	}
-	//for password
-	if(password.value === ''){
-		showError(password, "password is required");
-	} else {
-		showSuccess(password);
-	}
-	//password 2
-	if(password2.value === ''){
-		showError(password2, "You must confirm your password");
-	} else {
-		showSuccess(password2);
-	}
+	//send an array to inputs to the function
+	checkRequired([username, email, password, password2]);
 })
